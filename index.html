@@ -675,28 +675,30 @@
                 });
             });
 
-            // Dynamic cursor effect for interactive elements
-            const cursor = document.createElement('div');
-            cursor.className = 'fixed w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full pointer-events-none z-50 opacity-0 transition-opacity duration-300';
-            document.body.appendChild(cursor);
+            // Dynamic cursor effect for interactive elements (desktop only)
+            if (window.innerWidth > 768 && !('ontouchstart' in window)) {
+                const cursor = document.createElement('div');
+                cursor.className = 'fixed w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full pointer-events-none z-50 opacity-0 transition-opacity duration-300';
+                document.body.appendChild(cursor);
 
-            document.addEventListener('mousemove', function(e) {
-                cursor.style.left = e.clientX - 8 + 'px';
-                cursor.style.top = e.clientY - 8 + 'px';
-            });
+                document.addEventListener('mousemove', function(e) {
+                    cursor.style.left = e.clientX - 8 + 'px';
+                    cursor.style.top = e.clientY - 8 + 'px';
+                });
 
-            const interactiveElements = document.querySelectorAll('button, a, .hover-float');
-            interactiveElements.forEach(element => {
-                element.addEventListener('mouseenter', function() {
-                    cursor.style.opacity = '1';
-                    cursor.style.transform = 'scale(2)';
+                const interactiveElements = document.querySelectorAll('button, a, .hover-float');
+                interactiveElements.forEach(element => {
+                    element.addEventListener('mouseenter', function() {
+                        cursor.style.opacity = '1';
+                        cursor.style.transform = 'scale(2)';
+                    });
+                    
+                    element.addEventListener('mouseleave', function() {
+                        cursor.style.opacity = '0';
+                        cursor.style.transform = 'scale(1)';
+                    });
                 });
-                
-                element.addEventListener('mouseleave', function() {
-                    cursor.style.opacity = '0';
-                    cursor.style.transform = 'scale(1)';
-                });
-            });
+            }
 
             // Loading animation
             window.addEventListener('load', function() {
